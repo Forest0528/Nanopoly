@@ -30,32 +30,24 @@ public class FollowThePath : MonoBehaviour {
         
         if (waypointIndex <= waypoints.Length)
         {
-            //transform.position = Vector2.MoveTowards(transform.position,
-            //waypoints[waypointIndex].transform.position,
-            //moveSpeed * Time.deltaTime);
-
-            ////if (waypointindex == waypoints.length)
-            ////{
-            ////    waypointindex = 0;
-            ////}
-
-            //if (transform.position == waypoints[waypointIndex].transform.position)
-            //{
-            //    waypointIndex ++;
-            //    moveAllowed = false;
-            //}
-            ///*if (transform.position == waypoints[39].transform.position && moveAllowed==true)
-            //{
-            //    moveAllowed = false;                
-            //}*/
             transform.position = Vector2.MoveTowards(transform.position,
             waypoints[waypointIndex].transform.position,
             moveSpeed * Time.deltaTime);
 
+            //if (waypointindex == waypoints.length)
+            //{
+            //    waypointindex = 0;
+            //}
+
             if (transform.position == waypoints[waypointIndex].transform.position)
             {
-                waypointIndex += 1;
+                waypointIndex ++;
+                moveAllowed = false;
             }
+            /*if (transform.position == waypoints[39].transform.position && moveAllowed==true)
+            {
+                moveAllowed = false;                
+            }*/
         }
     }
 }
