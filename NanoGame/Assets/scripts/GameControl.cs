@@ -11,7 +11,7 @@ public class GameControl : MonoBehaviour {
     public static int player1StartWaypoint = 0;
     public static int player2StartWaypoint = 0;
 
-    public static bool gameOver = false;
+    //public static bool gameOver = false;
 
     // Use this for initialization
     void Start () {
