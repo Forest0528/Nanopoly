@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GameControl : MonoBehaviour {
+public class GameControl : MonoBehaviour
+{
 
     private static GameObject whoWinsTextShadow, player1MoveText, player2MoveText;
 
@@ -14,7 +15,8 @@ public class GameControl : MonoBehaviour {
     public static bool gameOver = false;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         player1MoveText = GameObject.Find("Player1Buy");
         player2MoveText = GameObject.Find("Player2Buy");
 
@@ -30,13 +32,23 @@ public class GameControl : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (player1.GetComponent<FollowThePath>().waypointIndex > 
+        //Debug.Log(player1StartWaypoint+diceSideThrown);        
+
+        if (player1.GetComponent<FollowThePath>().waypointIndex >
             player1StartWaypoint + diceSideThrown)
         {
+            //Debug.Log(player1StartWaypoint + diceSideThrown);
             player1.GetComponent<FollowThePath>().moveAllowed = false;
-            player1MoveText.gameObject.SetActive(true);
+            player1MoveText.gameObject.SetActive(false);
             player2MoveText.gameObject.SetActive(true);
             player1StartWaypoint = player1.GetComponent<FollowThePath>().waypointIndex - 1;
+        }
+
+        if (player1.GetComponent<FollowThePath>().waypointIndex >= player1.GetComponent<FollowThePath>().waypoints.Length)
+        {
+            player1StartWaypoint = Random.Range(1, 5);
+            player1.transform.position = Vector2.MoveTowards(player1.transform.position, player1.GetComponent<FollowThePath>().waypoints[player1StartWaypoint].transform.position, 1f * Time.deltaTime);
+            diceSideThrown = 0;
         }
 
         if (player2.GetComponent<FollowThePath>().waypointIndex >
@@ -46,6 +58,13 @@ public class GameControl : MonoBehaviour {
             player2MoveText.gameObject.SetActive(false);
             player1MoveText.gameObject.SetActive(true);
             player2StartWaypoint = player2.GetComponent<FollowThePath>().waypointIndex - 1;
+        }
+
+        if (player2.GetComponent<FollowThePath>().waypointIndex >= player2.GetComponent<FollowThePath>().waypoints.Length)
+        {
+            player2StartWaypoint = 1;
+            player2.transform.position = Vector2.MoveTowards(player2.transform.position, player2.GetComponent<FollowThePath>().waypoints[player2StartWaypoint].transform.position, 1f * Time.deltaTime);
+            diceSideThrown = 0;
         }
 
         //if (player1.GetComponent<FollowThePath>().waypointIndex == 
@@ -65,7 +84,8 @@ public class GameControl : MonoBehaviour {
 
     public static void MovePlayer(int playerToMove)
     {
-        switch (playerToMove) { 
+        switch (playerToMove)
+        {
             case 1:
                 player1.GetComponent<FollowThePath>().moveAllowed = true;
                 break;

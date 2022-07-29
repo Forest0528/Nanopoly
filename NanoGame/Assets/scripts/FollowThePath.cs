@@ -1,53 +1,49 @@
 ﻿using UnityEngine;
 
-public class FollowThePath : MonoBehaviour {
+public class FollowThePath : MonoBehaviour
+{
 
     public Transform[] waypoints;
 
     [SerializeField]
     private float moveSpeed = 1f;
 
-    [HideInInspector]
+    //[HideInInspector]
     public int waypointIndex = 0;
 
     public bool moveAllowed = false;
 
-    private int _baseWayIndex = 0;
+    private int _delayWayIndex = 39;
 
-	// Use this for initialization
-	private void Start () {
+    // Use this for initialization
+    private void Start()
+    {
         transform.position = waypoints[waypointIndex].transform.position;
-	}
-	
-	// Update is called once per frame
-	private void Update () {
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
         if (moveAllowed)
-            Move();        
+            Move();
     }
 
     private void Move()
     {
-        
-        if (waypointIndex <= waypoints.Length)
+        if (waypointIndex == waypoints.Length)
+            waypointIndex = 0;
+
+        if (waypointIndex < waypoints.Length)
         {
             transform.position = Vector2.MoveTowards(transform.position,
             waypoints[waypointIndex].transform.position,
             moveSpeed * Time.deltaTime);
 
-            //if (waypointindex == waypoints.length)
-            //{
-            //    waypointindex = 0;
-            //}
-
             if (transform.position == waypoints[waypointIndex].transform.position)
             {
-                waypointIndex ++;
-                moveAllowed = false;
+                waypointIndex++;
             }
-            /*if (transform.position == waypoints[39].transform.position && moveAllowed==true)
-            {
-                moveAllowed = false;                
-            }*/
         }
     }
+
 }
